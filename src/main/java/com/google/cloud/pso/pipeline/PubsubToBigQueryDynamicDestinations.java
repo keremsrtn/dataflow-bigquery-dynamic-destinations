@@ -188,7 +188,8 @@ public class PubsubToBigQueryDynamicDestinations {
     PubsubMessage message = value.getValue();
 
     TableDestination destination;
-    String appID = value.getAttribute("app_id");
+
+    String appID = message.getAttributeMap().get("app_id");
     String[] arrOfStr = appID.split(".", 3);
     String tableName = arrOfStr[2];
 
