@@ -188,12 +188,16 @@ public class PubsubToBigQueryDynamicDestinations {
     PubsubMessage message = value.getValue();
 
     TableDestination destination;
+    String appID = message.getAttributeMap().get(tableNameAttr);
+    String[] arrOfStr = appID.split(".", 3);
+    String tableName = arrOfStr[2];
+
     if (message != null) {
       destination =
           new TableDestination(
               String.format(
                   "%s:%s.%s",
-                  outputProject, outputDataset, message.getAttributeMap().get(tableNameAttr)),
+                  outputProject, outputDataset, tableName),
               null);
     } else {
       throw new RuntimeException(
