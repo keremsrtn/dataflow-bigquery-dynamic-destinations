@@ -28,3 +28,19 @@ Build the entire project using the maven compile command.
 ```sh
 mvn clean && mvn compile
 ```
+
+Create the pipeline
+```sh
+mvn compile exec:java \
+-Dexec.mainClass=com.google.cloud.pso.pipeline.PubsubToBigQueryDynamicDestinations \
+-Dexec.cleanupDaemonThreads=false \
+-Dexec.args=" \
+--project=codeway-data-platform \
+--stagingLocation=gs://cdwdataflow_test/staging2 \
+--tempLocation=gs://cdwdataflow_test/temp \
+--runner=DataflowRunner \
+--subscription=projects/codeway-data-platform/subscriptions/dataflow_template_test \
+--tableNameAttr=app_id \
+--outputTableProject=codeway-data-platform \
+--outputTableDataset=events"
+```
